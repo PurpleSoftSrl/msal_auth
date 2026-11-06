@@ -1,3 +1,6 @@
+## 3.5.3+1
+- PurpleSoft fork: support AGP 9 built-in Kotlin (issue #147 upstream).
+
 ## 3.5.3
 - Pin the Swift MSAL library to `2.14.1` and prevent updates beyond this version to avoid native min deployment target breaking changes. [#issue/151](https://github.com/nayanAubie/msal_auth/issues/151)
 

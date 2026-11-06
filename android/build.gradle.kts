@@ -30,7 +30,12 @@ rootProject.allprojects {
 
 plugins {
     id("com.android.library")
-    id("kotlin-android")
+}
+
+// AGP 9 compiles Kotlin itself (built-in Kotlin) and refuses this plugin.
+val agpMajorVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.substringBefore('.').toInt()
+if (agpMajorVersion < 9) {
+    apply(plugin = "kotlin-android")
 }
 
 android {
@@ -41,12 +46,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
     }
 
     sourceSets {
@@ -61,6 +60,12 @@ android {
     defaultConfig {
         minSdk = 21
         consumerProguardFiles("consumer-rules.pro")
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
